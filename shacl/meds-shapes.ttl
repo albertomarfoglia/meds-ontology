@@ -1,7 +1,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix : <https://albertomarfoglia.github.io/meds/0.1.0/ontology#> .
+@prefix : <https://albertomarfoglia.github.io/meds-ontology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@base <https://albertomarfoglia.github.io/meds/0.1.0/ontology#> .
+@base <https://albertomarfoglia.github.io/meds-ontology#> .
 
 # Subject shape
 :SubjectShape

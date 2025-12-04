@@ -1,35 +1,40 @@
-# MEDS Ontology (OWL)
+<h1 align="center">MEDS Ontology (OWL)</h1>
 
-<!-- Build & Validation -->
-<!-- ![SHACL Validation](https://github.com/albertomarfoglia/meds-ontology/actions/workflows/validate.yml/badge.svg)
-![Lint](https://img.shields.io/badge/RDF%20syntax-Valid-brightgreen)
-![OWL](https://img.shields.io/badge/OWL%202-✓-blue) -->
+<p align="center">
+  <!-- Build & Validation -->
+  <img src="https://github.com/albertomarfoglia/meds-ontology/actions/workflows/validate.yml/badge.svg" alt="SHACL Validation"/>
+  <img src="https://img.shields.io/badge/RDF%20syntax-Valid-brightgreen" alt="RDF Syntax Valid"/>
+  <img src="https://img.shields.io/badge/OWL%202-✓-blue" alt="OWL 2"/>
+  <img src="https://img.shields.io/github/v/release/albertomarfoglia/meds-ontology" alt="Latest Release"/>
+  <img src="https://img.shields.io/badge/Ontology%20version-0.1.0-blueviolet" alt="Ontology Version"/>
+  <img src="https://img.shields.io/github/license/albertomarfoglia/meds-ontology" alt="License"/>
+    <!-- <a href="https://albertomarfoglia.github.io/meds-ontology">
+    <img src="https://img.shields.io/badge/docs-GitHub%20Pages-blue" alt="Documentation"/>
+  </a>
+  <a href="https://github.com/dgarijo/Widoco">
+    <img src="https://img.shields.io/badge/docs-Widoco%20generated-9cf" alt="Widoco"/>
+  </a> -->
 
-<!-- Documentation -->
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://albertomarfoglia.github.io/meds-ontology/)
-[![Widoco](https://img.shields.io/badge/docs-Widoco%20generated-9cf)](https://github.com/dgarijo/Widoco)
-
-<!-- Versioning -->
-![Release](https://img.shields.io/github/v/release/albertomarfoglia/meds-ontology)
-![Version](https://img.shields.io/badge/Ontology%20version-0.1.0-blueviolet)
-
-<!-- License -->
-![License](https://img.shields.io/github/license/albertomarfoglia/meds-ontology)
-
-<!-- DOI (Zenodo) – replace with real DOI once minted -->
-[![DOI](https://img.shields.io/badge/DOI-Zenodo-grey)](https://zenodo.org/)
+  <!-- DOI placeholder (update when minted)
+  <a href="https://zenodo.org/">
+    <img src="https://img.shields.io/badge/DOI-Zenodo-grey" alt="DOI"/>
+  </a> -->
+</p>
 
 This repository contains an OWL ontology and SHACL shapes that formally encode the **Medical Event Data Standard (MEDS)** conceptual data model.  
 It provides a semantic framework for representing subjects, clinical measurements, code metadata, dataset-level provenance, subject splits, and prediction labels.
 
 This repository includes:
 
-- `ontology/meds.ttl` — OWL ontology (Turtle). Base IRI: `https://albertomarfoglia.github.io/meds/0.1.0/ontology#`.
-- `shacl/meds-shapes.ttl` — SHACL shapes implementing MEDS validation rules.
-- `examples/examples.ttl` — RDF instance examples.
-- `docs/` — Widoco-generated documentation (published via GitHub Pages).
-- `modeling.md` — **full modeling rationale** and detailed mapping to MEDS (based on McGuinness & Noy’s *Ontology Development 101*).
-- `.github/workflows/validate.yml` — CI pipeline for SHACL validation.
+```
+.
+├── ontology/            # OWL ontology
+├── shacl/               # SHACL validation shapes
+├── examples/            # Example RDF instance data
+├── docs/                # Widoco-generated documentation
+├── modeling.md          # Detailed modeling rationale (Ontology 101)
+└── README.md
+```
 
 ## References
 
@@ -43,41 +48,19 @@ DataSchema, CodeMetadataSchema, DatasetMetadataSchema, SubjectSplitSchema, and L
 A detailed alignment is provided in `modeling.md`.
 
 ## Documentation
+This ontology provides multiple ways to explore and understand its structure:
 
-The complete ontology documentation is available in `docs/` (generated with Widoco).
+- **Interactive Visualization (WebVOWL):**  
+  Explore the ontology graphically, including classes, properties, and hierarchy.  
+  [Open in WebVOWL](https://service.tib.eu/webvowl/#iri=https://albertomarfoglia.github.io/meds-ontology/ontology.owl)
 
-For a rigorous and academically motivated description of all modeling decisions, see:
+- **Full Ontology Documentation (Widoco):**  
+  Access comprehensive class/property descriptions, annotations, and usage examples.  
+  [View the documentation](https://albertomarfoglia.github.io/meds-ontology)
 
-👉 **`modeling.md` — Important Modeling Considerations & Design Rationale**  
-(including mappings to MEDS, tables, and adherence to McGuinness & Noy’s *Ontology Development 101*)
-
-This file explains:
-
-- ontology domain & scope  
-- reuse strategy  
-- term enumeration  
-- class hierarchy & conceptual design  
-- object/datatype properties  
-- constraints and validation  
-- design alternatives considered  
-- justification of OWL vs SHACL boundaries  
-- detailed MEDS → OWL mappings (tabular)
-
-## Goals & Scope
-
-This ontology captures the core conceptual structure defined in the MEDS standard:
-
-- `Subject`  
-- `Measurement` (events/observations with timestamp and code)  
-- `Code` (vocabulary entries)  
-- `DatasetMetadata`  
-- `SubjectSplit`  
-- `LabelSample` (prediction samples)  
-- extensible value modalities (e.g., image, waveform data)
-
-It prioritizes **semantic clarity**, **reusability**, and **validation support**.
-
-Operational dataset constraints (e.g., sorted order, contiguous subject blocks) are documented but intentionally **not encoded** in OWL/SHACL.
+- **Modeling Rationale:**  
+  For a rigorous discussion of design decisions, alignment with MEDS schemas, and adherence to *Ontology Development 101*, see [`modeling.md`](modeling.md).  
+  This includes tables, mapping details, and constraints implemented in OWL and SHACL.
 
 ## Quickstart
 
@@ -95,17 +78,6 @@ Run validation:
 
 ```bash
 pyshacl -s shacl/meds-shapes.ttl -i examples/examples.ttl -f ttl
-```
-
-## Repository structure
-```
-.
-├── ontology/            # OWL ontology
-├── shacl/               # SHACL validation shapes
-├── examples/            # Example RDF instance data
-├── docs/                # Widoco-generated documentation
-├── modeling.md          # Detailed modeling rationale (Ontology 101)
-└── README.md
 ```
 
 ## Citation

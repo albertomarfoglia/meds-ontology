@@ -3,13 +3,13 @@
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2002/07/owl#unionOf" : [ {
     "@list" : [ {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
     }, {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
     }, {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
     }, {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Subject"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#Subject"
     } ]
   } ]
 }, {
@@ -20,7 +20,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#createdAt"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#createdAt"
   } ]
 }, {
   "@id" : "_:genid12",
@@ -30,7 +30,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#datasetName"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#datasetName"
   } ]
 }, {
   "@id" : "_:genid13",
@@ -40,7 +40,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#medsVersion"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#medsVersion"
   } ]
 }, {
   "@id" : "_:genid14",
@@ -50,7 +50,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasSubject"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasSubject"
   } ]
 }, {
   "@id" : "_:genid15",
@@ -60,7 +60,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#predictionTime"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#predictionTime"
   } ]
 }, {
   "@id" : "_:genid16",
@@ -70,7 +70,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#booleanValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#booleanValue"
   } ]
 }, {
   "@id" : "_:genid17",
@@ -80,7 +80,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#categoricalValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#categoricalValue"
   } ]
 }, {
   "@id" : "_:genid18",
@@ -90,7 +90,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#floatValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#floatValue"
   } ]
 }, {
   "@id" : "_:genid19",
@@ -100,7 +100,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#integerValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#integerValue"
   } ]
 }, {
   "@id" : "_:genid20",
@@ -110,7 +110,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasCode"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasCode"
   } ]
 }, {
   "@id" : "_:genid21",
@@ -120,7 +120,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasSubject"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasSubject"
   } ]
 }, {
   "@id" : "_:genid22",
@@ -130,7 +130,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#numericValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#numericValue"
   } ]
 }, {
   "@id" : "_:genid23",
@@ -140,7 +140,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#textValue"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#textValue"
   } ]
 }, {
   "@id" : "_:genid24",
@@ -150,16 +150,16 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#time"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#time"
   } ]
 }, {
   "@id" : "_:genid6",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2002/07/owl#unionOf" : [ {
     "@list" : [ {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
     }, {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
     } ]
   } ]
 }, {
@@ -170,7 +170,7 @@
     "@value" : "1"
   } ],
   "http://www.w3.org/2002/07/owl#onProperty" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#codeString"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#codeString"
   } ]
 }, {
   "@id" : "http://purl.org/dc/terms/created",
@@ -188,7 +188,7 @@
   "@id" : "http://www.w3.org/2001/XMLSchema#date",
   "@type" : [ "http://www.w3.org/2000/01/rdf-schema#Datatype" ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology",
   "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ],
   "http://purl.org/dc/terms/created" : [ {
     "@type" : "http://www.w3.org/2001/XMLSchema#date",
@@ -207,7 +207,7 @@
     "@value" : "0.1.0"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Metadata/vocabulary entry describing a measurement code (code string, description, parent codes, external links)."
@@ -220,11 +220,11 @@
   } ],
   "http://www.w3.org/2002/07/owl#hasKey" : [ {
     "@list" : [ {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#codeString"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#codeString"
     } ]
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "High-level provenance and conversion metadata for a MEDS dataset (dataset_name, dataset_version, etl info, created_at, etc.)."
@@ -242,7 +242,7 @@
     "@id" : "_:genid13"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#ImageValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#ImageValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Value modality pointing to an image path/uri."
@@ -251,10 +251,10 @@
     "@value" : "ImageValue"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#ValueModality"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#ValueModality"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "A prediction sample row: subject, prediction_time, and one label value (boolean/integer/float/categorical)."
@@ -276,10 +276,10 @@
     "@id" : "_:genid19"
   } ],
   "http://www.w3.org/2002/07/owl#disjointWith" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "A single observation/row in MEDS: (subject, time?, code, value modalities...). Time is nullable for static measurements."
@@ -299,7 +299,7 @@
     "@id" : "_:genid24"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Subject",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#Subject",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Primary entity for which care observations are recorded. Maps to MEDS subject_id (patient or admission-level subject)."
@@ -309,11 +309,11 @@
   } ],
   "http://www.w3.org/2002/07/owl#hasKey" : [ {
     "@list" : [ {
-      "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#subjectId"
+      "@id" : "https://albertomarfoglia.github.io/meds-ontology#subjectId"
     } ]
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#SubjectSplit",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#SubjectSplit",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "An assignment of a subject to a named split (train, tuning, held_out)."
@@ -322,7 +322,7 @@
     "@value" : "SubjectSplit"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#ValueModality",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#ValueModality",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Generic holder for additional value modalities (image path, waveform id, etc.). Instances may contain modality-specific properties."
@@ -331,28 +331,28 @@
     "@value" : "ValueModality"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#assignedSplit",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#assignedSplit",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Assign a subject to a split (train, tuning, held_out)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Subject"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Subject"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "assignedSplit"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#SubjectSplit"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#SubjectSplit"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#booleanValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#booleanValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Boolean label value (if applicable)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "booleanValue"
@@ -361,13 +361,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#boolean"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#categoricalValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#categoricalValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Categorical label encoded as a string."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "categoricalValue"
@@ -376,13 +376,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#codeDescription",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#codeDescription",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Human readable description of the code."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "codeDescription"
@@ -391,7 +391,7 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#codeString",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#codeString",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty", "http://www.w3.org/2002/07/owl#FunctionalProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Canonical textual code; functional for Code. Also present on Measurement when no Code metadata exists."
@@ -403,13 +403,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#createdAt",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#createdAt",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Creation timestamp of the dataset in RFC 3339 format. REQUIRED. Matches MEDS: created_at."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "createdAt"
@@ -418,13 +418,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#dateTime"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#datasetName",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#datasetName",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Name of the dataset. REQUIRED. Matches MEDS: dataset_name."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "datasetName"
@@ -433,13 +433,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#datasetVersion",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#datasetVersion",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Dataset version string assigned by the dataset creator. OPTIONAL. Matches MEDS: dataset_version."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "datasetVersion"
@@ -448,7 +448,7 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#describedInDataset",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#describedInDataset",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Link to the dataset-level metadata that describes the provenance/etl for instances."
@@ -460,16 +460,16 @@
     "@value" : "describedInDataset"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#etlNotes",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#etlNotes",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Freeform notes describing how conversion to MEDS was performed. OPTIONAL. Matches MEDS: etl_notes."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "etlNotes"
@@ -478,13 +478,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#etlVersion",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#etlVersion",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Version of the ETL pipeline used to create the dataset. OPTIONAL. Matches MEDS: etl_version."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "etlVersion"
@@ -493,13 +493,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#floatValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#floatValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Float label value (continuous target)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "floatValue"
@@ -508,70 +508,70 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#double"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasCode",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasCode",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Link from a Measurement to a Code metadata entry. If no Code metadata file exists, codeString on Measurement is used."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "hasCode"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasSubject",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasSubject",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Links a Measurement or LabelSample to its Subject (maps to subject_id)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   }, {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "hasSubject"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Subject"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Subject"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#hasValueModality",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#hasValueModality",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Attach additional value modalities (image, waveform, etc.) to a Measurement."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "hasValueModality"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#ValueModality"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#ValueModality"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#heldOutSplit",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#heldOutSplit",
   "@type" : [ "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#SubjectSplit"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#SubjectSplit"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
     "@value" : "held_out"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#integerValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#integerValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Integer label value (e.g., ordinal labels)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "integerValue"
@@ -580,13 +580,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#integer"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#medsVersion",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#medsVersion",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Version of the MEDS schema used to generate the dataset. REQUIRED. Matches MEDS: meds_version."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "medsVersion"
@@ -595,13 +595,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#numericValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#numericValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Numeric measurement value (optional in MEDS)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "numericValue"
@@ -610,28 +610,28 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#double"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#parentCode",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#parentCode",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Ontological/aggregation parent relations between codes (maps to CodeMetadata.parent_codes)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "parentCode"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Code"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Code"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#predictionTime",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#predictionTime",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Inclusive endpoint of the data usable for predicting the label (required for LabelSample)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#LabelSample"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#LabelSample"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "predictionTime"
@@ -640,13 +640,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#dateTime"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#protocolNotes",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#protocolNotes",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Notes describing how to interpret data, data quirks, filtering logic, or protocol differences across sites. OPTIONAL. Matches MEDS: protocol_notes."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "protocolNotes"
@@ -655,13 +655,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#siteId",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#siteId",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Identifier for site of care (maps to MEDS metadata: site_id_columns)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "siteId"
@@ -670,13 +670,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#siteIdColumns",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#siteIdColumns",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Comma-separated list of columns that represent site identifiers. OPTIONAL. Matches MEDS: site_id_columns."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "siteIdColumns"
@@ -685,25 +685,25 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#subjectId",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#subjectId",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty", "http://www.w3.org/2002/07/owl#FunctionalProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Unique identifier for a Subject; functional (= at most one value per Subject)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Subject"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Subject"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#subjectIdColumns",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#subjectIdColumns",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Comma-separated list of columns used as subject identifiers. REQUIRED (typically 'subject_id'). Matches MEDS: subject_id_columns."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "subjectIdColumns"
@@ -712,13 +712,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#tableName",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#tableName",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Name of a measurement table included in the dataset. Repeated one triple per table (preferred to comma-separated lists)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#DatasetMetadata"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "tableName"
@@ -727,13 +727,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#textValue",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#textValue",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Text measurement value (optional in MEDS)."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "textValue"
@@ -742,13 +742,13 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#time",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#time",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@value" : "Timestamp of the measurement. MEDS allows null for static measurements; modelled as 0..1 cardinality."
   } ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#Measurement"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#Measurement"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@value" : "time"
@@ -757,20 +757,20 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#dateTime"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#trainSplit",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#trainSplit",
   "@type" : [ "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#SubjectSplit"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#SubjectSplit"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
     "@value" : "train"
   } ]
 }, {
-  "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#tuningSplit",
+  "@id" : "https://albertomarfoglia.github.io/meds-ontology#tuningSplit",
   "@type" : [ "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" : [ {
-    "@id" : "https://albertomarfoglia.github.io/meds/0.1.0/ontology#SubjectSplit"
+    "@id" : "https://albertomarfoglia.github.io/meds-ontology#SubjectSplit"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",

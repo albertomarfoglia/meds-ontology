@@ -21,9 +21,9 @@ jobs:
       - name: Install pyshacl
         run: |
           python -m pip install --upgrade pip
-          pip install pyshacl rdflib
+          pip install pyshacl rdflib pyduktape2
 
       - name: Run SHACL validation
         run: |
           echo "Validating examples/instances.ttl against shacl/meds-shapes.ttl"
-          pyshacl -s shacl/meds-shapes.ttl -i examples/instances.ttl -f text || (echo "SHACL validation FAILED" && exit 1)
+          pyshacl -s shacl/meds-shapes.ttl -m -i rdfs -a -j -f human examples/instances.ttl || (echo "SHACL validation FAILED" && exit 1)
