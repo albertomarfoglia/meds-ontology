@@ -1,32 +1,61 @@
-@prefix : <https://albertomarfoglia.github.io/meds/0.1.0/ontology#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix :   <https://albertomarfoglia.github.io/meds-ontology#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
 @base <https://albertomarfoglia.github.io/meds/0.1.0/ontology#> .
+
+##########################################################
+# Dataset instance
+##########################################################
 
 :Dataset_MIMIC_DEMO
     a :DatasetMetadata ;
-    :datasetName "MIMIC-IV-Demo" ;
+    dct:title "MIMIC-IV-Demo" ;
     :medsVersion "0.3.3" ;
-    :createdAt "2025-03-28T13:47:38.809053"^^xsd:dateTime ;
-    :datasetVersion "2.2" ;
-    :etlVersion "0.0.4" ;
-    :tableName "data/train/0.parquet" , "data/train/1.parquet" .
+    dct:created "2025-03-28T13:47:38.809053"^^xsd:dateTime ;
+    dct:hasVersion "2.2" ;
+    dcat:distribution :dist_dataset1 ;
+    prov:wasGeneratedBy :etlActivity1 ;
+    :tableName "data/train/0.parquet", "data/train/1.parquet" .
 
-:trainSplit a :SubjectSplit ; rdfs:label "train"@en .
-:tuningSplit a :SubjectSplit ; rdfs:label "tuning"@en .
-:heldOutSplit a :SubjectSplit ; rdfs:label "held_out"@en .
+# Distribution for dataset location and description
+:dist_dataset1 a dcat:Distribution ;
+    dcat:downloadURL <s3://example-bucket/mimic-iv-demo/> ;
+    dcat:accessURL <https://example.org/mimic-iv-demo/README> .
+
+##########################################################
+# ETL activity node
+##########################################################
+
+:etlActivity1 a prov:Activity ;
+    rdfs:label "meds-etl" ;
+    dct:hasVersion "0.0.4" ;
+    rdfs:comment "ETL notes: describes how conversion to MEDS was performed." .
+
+##########################################################
+# Subject
+##########################################################
 
 :subj12345678 a :Subject ;
     :subjectId "12345678" ;
     :assignedSplit :trainSplit ;
     prov:wasDerivedFrom :Dataset_MIMIC_DEMO .
 
+##########################################################
+# Codes
+##########################################################
+
 :LAB_51237_UNK a :Code ;
     :codeString "LAB//51237//UNK" ;
     :codeDescription "Example lab code (encoded)" ;
     :externalCodeId "LOINC/718-7" ;
     prov:wasDerivedFrom :Dataset_MIMIC_DEMO .
+
+##########################################################
+# Events
+##########################################################
 
 :meas1 a :Event ;
     :hasSubject :subj12345678 ;
@@ -40,6 +69,10 @@
     :codeString "GENDER//M" ;
     :textValue "M" ;
     prov:wasDerivedFrom :Dataset_MIMIC_DEMO .
+
+##########################################################
+# Label samples
+##########################################################
 
 :label_12345678_20210401 a :LabelSample ;
     :hasSubject :subj12345678 ;

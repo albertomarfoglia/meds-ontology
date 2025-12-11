@@ -1,200 +1,233 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix : <https://albertomarfoglia.github.io/meds-ontology#> .
+@prefix meds: <https://albertomarfoglia.github.io/meds-ontology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @base <https://albertomarfoglia.github.io/meds-ontology#> .
 
+##########################################################
 # Subject shape
-:SubjectShape
+##########################################################
+meds:SubjectShape
     a sh:NodeShape ;
-    sh:targetClass :Subject ;
+    sh:targetClass meds:Subject ;
     sh:property [
-        sh:path :subjectId ;
+        sh:path meds:subjectId ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
         sh:message "Each Subject must have a subjectId (string)." ;
     ] ;
-    sh:message "Subject nodes should have a unique subjectId; uniqueness across the graph must be checked by dataset-level logic." .
+    sh:message "Subject nodes should have a unique subjectId; uniqueness across the graph must be checked procedurally." .
 
+##########################################################
 # Code shape
-:CodeShape
+##########################################################
+meds:CodeShape
     a sh:NodeShape ;
-    sh:targetClass :Code ;
+    sh:targetClass meds:Code ;
     sh:property [
-        sh:path :codeString ;
+        sh:path meds:codeString ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
         sh:message "Each Code must have a codeString (canonical code text)." ;
     ] .
-    # sh:property [
-    #     sh:path :parentCode ;
-    #     sh:nodeKind sh:IRI ;
-    #     sh:class :Code ;
-    #     sh:maxCount 1 ;
-    #     sh:message "parentCode, if present, should point to another Code node." ;
-    # ] .
 
+##########################################################
 # DatasetMetadata shape
-:DatasetMetadataShape
+##########################################################
+meds:DatasetMetadataShape
     a sh:NodeShape ;
-    sh:targetClass :DatasetMetadata ;
+    sh:targetClass meds:DatasetMetadata ;
     sh:property [
-        sh:path :datasetName ;
+        sh:path dct:title ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
-        sh:message "DatasetMetadata should have datasetName." ;
+        sh:message "DatasetMetadata should have dct:title (dataset name)." ;
     ] ;
     sh:property [
-        sh:path :medsVersion ;
+        sh:path dct:hasVersion ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "DatasetMetadata may have dct:hasVersion (dataset version)." ;
+    ] ;
+    sh:property [
+        sh:path meds:medsVersion ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
-        sh:message "DatasetMetadata should have medsVersion." ;
+        sh:message "DatasetMetadata must have meds:medsVersion." ;
     ] ;
     sh:property [
-        sh:path :createdAt ;
+        sh:path dct:created ;
         sh:minCount 1 ;
         sh:datatype xsd:dateTime ;
-        sh:message "DatasetMetadata should have createdAt (RFC3339 datetime)." ;
+        sh:message "DatasetMetadata must have dct:created (RFC3339 datetime)." ;
     ] ;
     sh:property [
-        sh:path :tableName ;
+        sh:path dcat:distribution ;
+        sh:minCount 1 ;
+        sh:nodeKind sh:IRI ;
+        sh:class dcat:Distribution ;
+        sh:message "DatasetMetadata must have at least one dcat:distribution." ;
+    ] ;
+    sh:property [
+        sh:path meds:tableName ;
         sh:minCount 0 ;
         sh:datatype xsd:string ;
         sh:message "tableName may be repeated (one triple per table)." ;
+    ] ;
+    sh:property [
+        sh:path meds:rawSourceIdColumn ;
+        sh:minCount 0 ;
+        sh:datatype xsd:string ;
+        sh:message "Optional repeated literal for rawSourceIdColumn." ;
+    ] ;
+    sh:property [
+        sh:path meds:codeModifierColumn ;
+        sh:minCount 0 ;
+        sh:datatype xsd:string ;
+        sh:message "Optional repeated literal for codeModifierColumn." ;
+    ] ;
+    sh:property [
+        sh:path meds:additionalValueModalityColumn ;
+        sh:minCount 0 ;
+        sh:datatype xsd:string ;
+        sh:message "Optional repeated literal for additionalValueModalityColumn." ;
+    ] ;
+    sh:property [
+        sh:path meds:siteIdColumn ;
+        sh:minCount 0 ;
+        sh:datatype xsd:string ;
+        sh:message "Optional repeated literal for siteIdColumn." ;
+    ] ;
+    sh:property [
+        sh:path meds:otherExtensionColumn ;
+        sh:minCount 0 ;
+        sh:datatype xsd:string ;
+        sh:message "Optional repeated literal for otherExtensionColumn." ;
     ] .
 
+##########################################################
 # Event shape
-:EventShape
+##########################################################
+meds:EventShape
     a sh:NodeShape ;
-    sh:targetClass :Event ;
+    sh:targetClass meds:Event ;
     sh:property [
-        sh:path :hasSubject ;
+        sh:path meds:hasSubject ;
         sh:minCount 1 ;
         sh:nodeKind sh:IRI ;
-        sh:class :Subject ;
-        sh:message "Event must link to a Subject via :hasSubject." ;
+        sh:class meds:Subject ;
+        sh:message "Event must link to a Subject via meds:hasSubject." ;
     ] ;
     sh:or (
         [ sh:property [
-            sh:path :hasCode ;
+            sh:path meds:hasCode ;
             sh:minCount 1 ;
             sh:nodeKind sh:IRI ;
-            sh:class :Code ;
+            sh:class meds:Code ;
             sh:message "If present, hasCode must point to a Code node." ;
         ] ]
         [ sh:property [
-            sh:path :codeString ;
+            sh:path meds:codeString ;
             sh:minCount 1 ;
             sh:datatype xsd:string ;
             sh:message "If no Code node is used, the Event must have a codeString literal." ;
         ] ]
     ) ;
     sh:property [
-        sh:path :time ;
+        sh:path meds:time ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:datatype xsd:dateTime ;
         sh:message "time must be an xsd:dateTime if present." ;
     ] ;
     sh:property [
-        sh:path :numericValue ;
+        sh:path meds:numericValue ;
         sh:maxCount 1 ;
         sh:datatype xsd:double ;
-        sh:message "numericValue, if present, must be a numeric literal." ;
+        sh:message "numericValue, if present, must be numeric." ;
     ] ;
     sh:property [
-        sh:path :textValue ;
+        sh:path meds:textValue ;
         sh:maxCount 1 ;
         sh:datatype xsd:string ;
         sh:message "textValue, if present, must be a string literal." ;
     ] ;
     sh:property [
-        sh:path :hasValueModality ;
+        sh:path meds:hasValueModality ;
         sh:minCount 0 ;
         sh:nodeKind sh:IRI ;
-        sh:class :ValueModality ;
+        sh:class meds:ValueModality ;
         sh:message "hasValueModality should reference ValueModality instances (e.g., ImageValue)." ;
     ] .
 
-# LabelSample shape (exactly-one-of)
-:LabelSampleShape
+##########################################################
+# LabelSample shape
+##########################################################
+meds:LabelSampleShape
     a sh:NodeShape ;
-    sh:targetClass :LabelSample ;
+    sh:targetClass meds:LabelSample ;
     sh:property [
-        sh:path :hasSubject ;
+        sh:path meds:hasSubject ;
         sh:minCount 1 ;
         sh:nodeKind sh:IRI ;
-        sh:class :Subject ;
-        sh:message "LabelSample must reference a Subject via :hasSubject." ;
+        sh:class meds:Subject ;
+        sh:message "LabelSample must reference a Subject via meds:hasSubject." ;
     ] ;
     sh:property [
-        sh:path :predictionTime ;
+        sh:path meds:predictionTime ;
         sh:minCount 1 ;
         sh:datatype xsd:dateTime ;
-        sh:message "LabelSample must have predictionTime (xsd:dateTime) specifying the inclusive as-of endpoint." ;
+        sh:message "LabelSample must have predictionTime (xsd:dateTime)." ;
     ] ;
     sh:or (
-        [
-            sh:property [
-                sh:path :booleanValue ;
-                sh:minCount 1 ;
-                sh:datatype xsd:boolean ;
-            ] ;
-            sh:property [ sh:path :integerValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :floatValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :categoricalValue ; sh:maxCount 0 ] ;
+        [ sh:property [ sh:path meds:booleanValue ; sh:minCount 1 ; sh:datatype xsd:boolean ] ;
+          sh:property [ sh:path meds:integerValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:floatValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:categoricalValue ; sh:maxCount 0 ] ;
         ]
-        [
-            sh:property [
-                sh:path :integerValue ;
-                sh:minCount 1 ;
-                sh:datatype xsd:integer ;
-            ] ;
-            sh:property [ sh:path :booleanValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :floatValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :categoricalValue ; sh:maxCount 0 ] ;
+        [ sh:property [ sh:path meds:integerValue ; sh:minCount 1 ; sh:datatype xsd:integer ] ;
+          sh:property [ sh:path meds:booleanValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:floatValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:categoricalValue ; sh:maxCount 0 ] ;
         ]
-        [
-            sh:property [
-                sh:path :floatValue ;
-                sh:minCount 1 ;
-                sh:datatype xsd:double ;
-            ] ;
-            sh:property [ sh:path :booleanValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :integerValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :categoricalValue ; sh:maxCount 0 ] ;
+        [ sh:property [ sh:path meds:floatValue ; sh:minCount 1 ; sh:datatype xsd:double ] ;
+          sh:property [ sh:path meds:booleanValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:integerValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:categoricalValue ; sh:maxCount 0 ] ;
         ]
-        [
-            sh:property [
-                sh:path :categoricalValue ;
-                sh:minCount 1 ;
-                sh:datatype xsd:string ;
-            ] ;
-            sh:property [ sh:path :booleanValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :integerValue ; sh:maxCount 0 ] ;
-            sh:property [ sh:path :floatValue ; sh:maxCount 0 ] ;
+        [ sh:property [ sh:path meds:categoricalValue ; sh:minCount 1 ; sh:datatype xsd:string ] ;
+          sh:property [ sh:path meds:booleanValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:integerValue ; sh:maxCount 0 ] ;
+          sh:property [ sh:path meds:floatValue ; sh:maxCount 0 ] ;
         ]
     ) ;
-    sh:message "LabelSample must contain exactly one label value (booleanValue OR integerValue OR floatValue OR categoricalValue)." .
+    sh:message "LabelSample must contain exactly one label value." .
 
+##########################################################
 # SubjectSplit shape
-:SubjectSplitShape
+##########################################################
+meds:SubjectSplitShape
     a sh:NodeShape ;
-    sh:targetClass :SubjectSplit ;
+    sh:targetClass meds:SubjectSplit ;
     sh:property [
-        sh:path :splitName ;
+        sh:path meds:splitName ;
         sh:minCount 1 ;
         sh:datatype xsd:string ;
-        sh:in ( "train" "tuning" "held_out" ) ;
+        sh:in ("train" "tuning" "held_out") ;
         sh:message "SubjectSplit must have a splitName in {train, tuning, held_out}." ;
     ] .
 
+##########################################################
 # Informational constraints
-:OperationalConstraintsInfo
+##########################################################
+meds:OperationalConstraintsInfo
     a sh:NodeShape ;
-    sh:targetClass :DatasetMetadata ;
+    sh:targetClass meds:DatasetMetadata ;
     sh:message """
-        MEDS operational invariants that are NOT fully enforceable by SHACL/OWL:
+        MEDS operational invariants not fully enforceable by SHACL/OWL:
          - Subject contiguity: data for a single subject must not be split across multiple physical files.
          - Sorted order: within a subject, events should be ordered by time.
-        These constraints must be enforced by ETL/ingestion pipelines or checked by procedural scripts.
+        Must be enforced by ETL pipelines or procedural scripts.
     """ .

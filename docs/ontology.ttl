@@ -7,30 +7,20 @@
 @base <https://albertomarfoglia.github.io/meds-ontology#> .
 
 <https://albertomarfoglia.github.io/meds-ontology> rdf:type owl:Ontology ;
-                                                    <http://purl.org/dc/terms/created> "2025-12-04"^^xsd:date ;
-                                                    <http://purl.org/dc/terms/creator> "Alberto Marfoglia" ;
-                                                    <http://purl.org/dc/terms/description> "An OWL ontology encoding the MEDS data model (subjects, measurements, codes, labels, dataset metadata, splits). This ontology intentionally models open/extendable value modalities and captures MEDS invariants as annotations where OWL cannot enforce them." ;
-                                                    <http://purl.org/dc/terms/title> "MEDS conceptual ontology (OWL)" ;
+                                                    <http://purl.org/dc/terms#creator> "Alberto Marfoglia" ;
+                                                    <http://purl.org/dc/terms#description> "An OWL ontology encoding the MEDS data model (subjects, events, codes, labels, dataset metadata, splits). This ontology intentionally models open/extendable value modalities and captures MEDS invariants as annotations where OWL cannot enforce them." ;
                                                     owl:versionInfo "0.1.0" .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
-###  http://purl.org/dc/terms/created
-<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
+###  http://purl.org/dc/terms#creator
+<http://purl.org/dc/terms#creator> rdf:type owl:AnnotationProperty .
 
 
-###  http://purl.org/dc/terms/creator
-<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/description
-<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/title
-<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+###  http://purl.org/dc/terms#description
+<http://purl.org/dc/terms#description> rdf:type owl:AnnotationProperty .
 
 
 #################################################################
@@ -45,8 +35,16 @@ xsd:date rdf:type rdfs:Datatype .
 #    Object Properties
 #################################################################
 
+###  http://www.w3.org/ns/dcat#distribution
+<http://www.w3.org/ns/dcat#distribution> rdf:type owl:ObjectProperty .
+
+
 ###  http://www.w3.org/ns/prov#wasDerivedFrom
 <http://www.w3.org/ns/prov#wasDerivedFrom> rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/ns/prov#wasGeneratedBy
+<http://www.w3.org/ns/prov#wasGeneratedBy> rdf:type owl:ObjectProperty .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#assignedSplit
@@ -59,26 +57,26 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  https://albertomarfoglia.github.io/meds-ontology#hasCode
 :hasCode rdf:type owl:ObjectProperty ;
-         rdfs:domain :Measurement ;
+         rdfs:domain :Event ;
          rdfs:range :Code ;
-         rdfs:comment "Link from a Measurement to a Code metadata entry. If no Code metadata file exists, codeString on Measurement is used." ;
+         rdfs:comment "Link from a Event to a Code metadata entry. If no Code metadata file exists, codeString on Event is used." ;
          rdfs:label "hasCode" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#hasSubject
 :hasSubject rdf:type owl:ObjectProperty ;
-            rdfs:domain :LabelSample ,
-                        :Measurement ;
+            rdfs:domain :Event ,
+                        :LabelSample ;
             rdfs:range :Subject ;
-            rdfs:comment "Links a Measurement or LabelSample to its Subject (maps to subject_id)." ;
+            rdfs:comment "Links a Event or LabelSample to its Subject (maps to subject_id)." ;
             rdfs:label "hasSubject" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#hasValueModality
 :hasValueModality rdf:type owl:ObjectProperty ;
-                  rdfs:domain :Measurement ;
+                  rdfs:domain :Event ;
                   rdfs:range :ValueModality ;
-                  rdfs:comment "Attach additional value modalities (image, waveform, etc.) to a Measurement." ;
+                  rdfs:comment "Attach additional value modalities (image, waveform, etc.) to a Event." ;
                   rdfs:label "hasValueModality" .
 
 
@@ -93,6 +91,22 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 #    Data properties
 #################################################################
+
+###  http://purl.org/dc/terms#created
+<http://purl.org/dc/terms#created> rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms#hasVersion
+<http://purl.org/dc/terms#hasVersion> rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms#license
+<http://purl.org/dc/terms#license> rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms#title
+<http://purl.org/dc/terms#title> rdf:type owl:DatatypeProperty .
+
 
 ###  https://albertomarfoglia.github.io/meds-ontology#additionalValueModalityColumn
 :additionalValueModalityColumn rdf:type owl:DatatypeProperty ;
@@ -139,67 +153,11 @@ xsd:date rdf:type rdfs:Datatype .
                      owl:FunctionalProperty ;
             rdfs:domain [ rdf:type owl:Class ;
                           owl:unionOf ( :Code
-                                        :Measurement
+                                        :Event
                                       )
                         ] ;
             rdfs:range xsd:string ;
-            rdfs:comment "Canonical textual code; functional for Code. Also present on Measurement when no Code metadata exists." .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#createdAt
-:createdAt rdf:type owl:DatatypeProperty ;
-           rdfs:domain :DatasetMetadata ;
-           rdfs:range xsd:dateTime ;
-           rdfs:comment "Creation timestamp of the dataset in RFC 3339 format. REQUIRED. Matches MEDS: created_at." ;
-           rdfs:label "createdAt" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#datasetName
-:datasetName rdf:type owl:DatatypeProperty ;
-             rdfs:domain :DatasetMetadata ;
-             rdfs:range xsd:string ;
-             rdfs:comment "Name of the dataset. REQUIRED. Matches MEDS: dataset_name." ;
-             rdfs:label "datasetName" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#datasetVersion
-:datasetVersion rdf:type owl:DatatypeProperty ;
-                rdfs:domain :DatasetMetadata ;
-                rdfs:range xsd:string ;
-                rdfs:comment "Dataset version string assigned by the dataset creator. OPTIONAL. Matches MEDS: dataset_version." ;
-                rdfs:label "datasetVersion" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#descriptionUri
-:descriptionUri rdf:type owl:DatatypeProperty ;
-                rdfs:domain :DatasetMetadata ;
-                rdfs:range xsd:string ;
-                rdfs:comment "URI pointing to a dataset description or README. OPTIONAL. Matches MEDS: description_uri / descriptionUri." ;
-                rdfs:label "descriptionUri" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#etlName
-:etlName rdf:type owl:DatatypeProperty ;
-         rdfs:domain :DatasetMetadata ;
-         rdfs:range xsd:string ;
-         rdfs:comment "Name of the ETL pipeline used to create the dataset. OPTIONAL. Matches MEDS: etl_name / etlName." ;
-         rdfs:label "etlName" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#etlNotes
-:etlNotes rdf:type owl:DatatypeProperty ;
-          rdfs:domain :DatasetMetadata ;
-          rdfs:range xsd:string ;
-          rdfs:comment "Freeform notes describing how conversion to MEDS was performed. OPTIONAL. Matches MEDS: etl_notes." ;
-          rdfs:label "etlNotes" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#etlVersion
-:etlVersion rdf:type owl:DatatypeProperty ;
-            rdfs:domain :DatasetMetadata ;
-            rdfs:range xsd:string ;
-            rdfs:comment "Version of the ETL pipeline used to create the dataset. OPTIONAL. Matches MEDS: etl_version." ;
-            rdfs:label "etlVersion" .
+            rdfs:comment "Canonical textual code; functional for Code. Also present on Event when no Code metadata exists." .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#floatValue
@@ -218,22 +176,6 @@ xsd:date rdf:type rdfs:Datatype .
               rdfs:label "integerValue" .
 
 
-###  https://albertomarfoglia.github.io/meds-ontology#license
-:license rdf:type owl:DatatypeProperty ;
-         rdfs:domain :DatasetMetadata ;
-         rdfs:range xsd:string ;
-         rdfs:comment "License under which the dataset is distributed. OPTIONAL. Matches MEDS: license." ;
-         rdfs:label "license" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#locationUri
-:locationUri rdf:type owl:DatatypeProperty ;
-             rdfs:domain :DatasetMetadata ;
-             rdfs:range xsd:string ;
-             rdfs:comment "URI/location where the dataset is stored. OPTIONAL. Matches MEDS: location_uri / locationUri." ;
-             rdfs:label "locationUri" .
-
-
 ###  https://albertomarfoglia.github.io/meds-ontology#medsVersion
 :medsVersion rdf:type owl:DatatypeProperty ;
              rdfs:domain :DatasetMetadata ;
@@ -244,9 +186,9 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  https://albertomarfoglia.github.io/meds-ontology#numericValue
 :numericValue rdf:type owl:DatatypeProperty ;
-              rdfs:domain :Measurement ;
+              rdfs:domain :Event ;
               rdfs:range xsd:double ;
-              rdfs:comment "Numeric measurement value (optional in MEDS)." ;
+              rdfs:comment "Numeric event value (optional in MEDS)." ;
               rdfs:label "numericValue" .
 
 
@@ -264,14 +206,6 @@ xsd:date rdf:type rdfs:Datatype .
                 rdfs:range xsd:dateTime ;
                 rdfs:comment "Inclusive endpoint of the data usable for predicting the label (required for LabelSample)." ;
                 rdfs:label "predictionTime" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#protocolNotes
-:protocolNotes rdf:type owl:DatatypeProperty ;
-               rdfs:domain :DatasetMetadata ;
-               rdfs:range xsd:string ;
-               rdfs:comment "Notes describing how to interpret data, data quirks, filtering logic, or protocol differences across sites. OPTIONAL. Matches MEDS: protocol_notes." ;
-               rdfs:label "protocolNotes" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#rawSourceIdColumn
@@ -306,33 +240,37 @@ xsd:date rdf:type rdfs:Datatype .
                  rdfs:label "subjectIdColumn" .
 
 
-###  https://albertomarfoglia.github.io/meds-ontology#tableName
-:tableName rdf:type owl:DatatypeProperty ;
-           rdfs:domain :DatasetMetadata ;
-           rdfs:range xsd:string ;
-           rdfs:comment "Name of a measurement table included in the dataset. Repeated one triple per table (preferred to comma-separated lists)." ;
-           rdfs:label "tableName" .
-
-
 ###  https://albertomarfoglia.github.io/meds-ontology#textValue
 :textValue rdf:type owl:DatatypeProperty ;
-           rdfs:domain :Measurement ;
+           rdfs:domain :Event ;
            rdfs:range xsd:string ;
-           rdfs:comment "Text measurement value (optional in MEDS)." ;
+           rdfs:comment "Text event value (optional in MEDS)." ;
            rdfs:label "textValue" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#time
 :time rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Measurement ;
+      rdfs:domain :Event ;
       rdfs:range xsd:dateTime ;
-      rdfs:comment "Timestamp of the measurement. MEDS allows null for static measurements; modelled as 0..1 cardinality." ;
+      rdfs:comment "Timestamp of the event. MEDS allows null for static events; modelled as 0..1 cardinality." ;
       rdfs:label "time" .
 
 
 #################################################################
 #    Classes
 #################################################################
+
+###  http://www.w3.org/ns/dcat#Dataset
+<http://www.w3.org/ns/dcat#Dataset> rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/dcat#Distribution
+<http://www.w3.org/ns/dcat#Distribution> rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/prov#Activity
+<http://www.w3.org/ns/prov#Activity> rdf:type owl:Class .
+
 
 ###  http://www.w3.org/ns/prov#Entity
 <http://www.w3.org/ns/prov#Entity> rdf:type owl:Class .
@@ -350,28 +288,83 @@ xsd:date rdf:type rdfs:Datatype .
                       ] ;
       owl:hasKey ( :codeString
                  ) ;
-      rdfs:comment "Metadata/vocabulary entry describing a measurement code (code string, description, parent codes, external links)." ;
+      rdfs:comment "Metadata/vocabulary entry describing a event code (code string, description, parent codes, external links)." ;
       rdfs:label "Code" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata
 :DatasetMetadata rdf:type owl:Class ;
-                 rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ,
+                 rdfs:subClassOf <http://www.w3.org/ns/dcat#Dataset> ,
+                                 <http://www.w3.org/ns/prov#Entity> ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty :createdAt ;
+                                   owl:onProperty <http://www.w3.org/ns/dcat#distribution> ;
+                                   owl:allValuesFrom <http://www.w3.org/ns/dcat#Distribution>
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://www.w3.org/ns/prov#wasGeneratedBy> ;
+                                   owl:allValuesFrom <http://www.w3.org/ns/prov#Activity>
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://purl.org/dc/terms#created> ;
                                    owl:cardinality "1"^^xsd:nonNegativeInteger
                                  ] ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty :datasetName ;
+                                   owl:onProperty <http://purl.org/dc/terms#title> ;
                                    owl:cardinality "1"^^xsd:nonNegativeInteger
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty :medsVersion ;
                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://purl.org/dc/terms#hasVersion> ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://purl.org/dc/terms#license> ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                  ] ;
-                 rdfs:comment "High-level provenance and conversion metadata for a MEDS dataset (dataset_name, dataset_version, etl info, created_at, etc.)." ,
-                              "MEDS invariants to be enforced by dataset creators/ETL: 1) Subject contiguity: data for a single subject must not be split across multiple physical files. 2) Sorted order: within a subject, measurements should be ordered by time. These are operational constraints and not fully expressible in OWL; they are documented here for consumers." ;
+                 rdfs:comment """High-level provenance and conversion metadata for a MEDS dataset. 
+         dataset_name → dct:title ;
+         dataset_version → dct:hasVersion ;
+         meds_version → meds:medsVersion ;
+         created_at → dct:created ;
+         license → dct:license ;
+         location_uri/description_uri → dcat:distribution (Distribution with dcat:downloadURL / dcat:accessURL) ;
+         ETL metadata (name, version, notes) are captured via prov:wasGeneratedBy → prov:Activity (rdfs:label, dct:hasVersion, rdfs:comment);
+         column lists → meds:... repeated-literal properties.""" ;
                  rdfs:label "DatasetMetadata" .
+
+
+###  https://albertomarfoglia.github.io/meds-ontology#Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty <http://www.w3.org/ns/prov#wasDerivedFrom> ;
+                         owl:allValuesFrom :DatasetMetadata
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasCode ;
+                         owl:cardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasSubject ;
+                         owl:cardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :numericValue ;
+                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :textValue ;
+                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :time ;
+                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                       ] ;
+       owl:disjointWith :LabelSample ;
+       rdfs:comment "A single observation/row in MEDS: (subject, time?, code, value modalities...). Time is nullable for static events." ;
+       rdfs:label "Event" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#ImageValue
@@ -411,39 +404,8 @@ xsd:date rdf:type rdfs:Datatype .
                                owl:onProperty :integerValue ;
                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
                              ] ;
-             owl:disjointWith :Measurement ;
              rdfs:comment "A prediction sample row: subject, prediction_time, and one label value (boolean/integer/float/categorical)." ;
              rdfs:label "LabelSample" .
-
-
-###  https://albertomarfoglia.github.io/meds-ontology#Measurement
-:Measurement rdf:type owl:Class ;
-             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                               owl:onProperty <http://www.w3.org/ns/prov#wasDerivedFrom> ;
-                               owl:allValuesFrom :DatasetMetadata
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :hasCode ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :hasSubject ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :numericValue ;
-                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :textValue ;
-                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :time ;
-                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                             ] ;
-             rdfs:comment "A single observation/row in MEDS: (subject, time?, code, value modalities...). Time is nullable for static measurements." ;
-             rdfs:label "Measurement" .
 
 
 ###  https://albertomarfoglia.github.io/meds-ontology#Subject
@@ -473,6 +435,12 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 #    Individuals
 #################################################################
+
+###  https://albertomarfoglia.github.io/meds-ontology
+<https://albertomarfoglia.github.io/meds-ontology> rdf:type owl:NamedIndividual ;
+                                                   <http://purl.org/dc/terms#created> "2025-12-04"^^xsd:date ;
+                                                   <http://purl.org/dc/terms#title> "MEDS conceptual ontology (OWL)" .
+
 
 ###  https://albertomarfoglia.github.io/meds-ontology#heldOutSplit
 :heldOutSplit rdf:type owl:NamedIndividual ,

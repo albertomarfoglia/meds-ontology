@@ -1,28 +1,28 @@
 # MEDS Ontology — Modeling considerations & design rationale
 
-**Version:** 0.1.0  
-**Author:** Alberto Marfoglia (ontology design)  
+**Version:** 0.1.0
+**Author:** Alberto Marfoglia (ontology design)
 **Date:** 2025-12-04
 
 ## Abstract
 
-This document provides a systematic, academically-oriented justification of the design choices embodied in `ontology/meds.ttl`. It follows the methodological recipe of Deborah L. McGuinness and Natalya F. Noy — *Ontology Development 101* — and maps each step to the MEDS conceptual schema. The aim is to make the ontology's structure, constraints, and operational responsibilities explicit so that practitioners can reason about correctness, maintenance, and validation.
+This document provides a systematic justification of the design choices embodied in `ontology/meds.ttl`. It follows the "Ontology Development 101" methodology and maps MEDS conceptual schema elements to ontology artifacts. The goal is to make the ontology’s structure, constraints, and operational responsibilities explicit so practitioners can reason about correctness, maintenance, and validation.
 
 ---
 
 ## Table of contents
 
-1. Determine the domain and scope  
-2. Reuse of existing ontologies and identifiers  
-3. Enumeration of important terms  
-4. Class taxonomy and modeling strategy  
-5. Properties: object vs datatype, domains and ranges  
-6. Facets, cardinalities and constraints (OWL vs SHACL)  
-7. Instance examples & use cases  
-8. Mappings between MEDS schema elements and ontology artifacts (tabular)  
-9. Design alternatives considered and rationale  
-10. Enforcement strategy and limitations  
-11. Recommended extensions and future work
+1. Determine the domain and scope
+2. Reuse of existing ontologies and identifiers
+3. Enumeration of important terms
+4. Class taxonomy and modeling strategy
+5. Properties: object vs datatype, domains and ranges
+6. Facets, cardinalities and constraints (OWL vs SHACL)
+7. Instance examples & use cases
+8. Mappings between MEDS schema elements and ontology artifacts (tabular)
+9. Design alternatives considered and rationale
+10. Enforcement strategy and limitations
+11. Recommended extensions and next work
 
 ---
 
@@ -31,12 +31,14 @@ This document provides a systematic, academically-oriented justification of the 
 **Domain:** Electronic Health Record (EHR) / claims-style *medical events*; specifically the MEDS conceptual model describing sequences of observations for subjects, and dataset metadata necessary for reproducible ML experiments.
 
 **Intended users:**
-- Data engineers and ETL authors converting raw EHR/claims sources into MEDS-compliant datasets.
-- ML engineers and data scientists performing reproducible experiments.
-- Ontology engineers and knowledge-graph practitioners integrating MEDS with other vocabularies (LOINC, SNOMED, OMOP).
-- Tooling authors (validators, data catalogs, dataset profilers).
+
+* Data engineers and ETL authors converting raw sources into MEDS-compliant datasets.
+* ML engineers and data scientists performing reproducible experiments.
+* Ontology engineers and knowledge-graph practitioners integrating MEDS with other vocabularies (LOINC, SNOMED, OMOP).
+* Tooling authors (validators, data catalogs, dataset profilers).
 
 **Primary competency questions (CQs):**
+
 1. For a given event, who is the subject and when did it occur?
 2. Does the event carry a numeric or textual value (or additional modalities)?
 3. What is the canonical code for this event and what human-readable description or parent codes exist?
@@ -49,18 +51,21 @@ These CQs drove the selection of classes, properties, and enforced constraints.
 
 ---
 
-## 2. Consider reuse of existing ontologies
+## 2. Reuse of existing ontologies and identifiers
 
 **Reused patterns and vocabularies:**
-- `rdfs:label`, `rdfs:comment` for human-readable annotations.
-- `dcterms:` (Dublin Core Terms) used to annotate provenance fields (e.g., `dcterms:created`, ontology metadata).
-prov: (W3C PROV-O) used to represent dataset-level provenance.
-- `xsd:` datatypes for literal typing (`xsd:dateTime`, `xsd:string`, `xsd:double`, `xsd:boolean`, `xsd:integer`).
+
+* `rdfs:label`, `rdfs:comment` for human-readable annotations.
+* **Dublin Core Terms (`dct:`)** for dataset-level metadata: `dct:title`, `dct:hasVersion`, `dct:created`, `dct:license`.
+* **DCAT (`dcat:`)** for dataset distributions: `dcat:Dataset`, `dcat:Distribution`, `dcat:downloadURL`, `dcat:accessURL`.
+* **PROV-O (`prov:`)** for provenance and ETL modeling: `prov:Activity`, `prov:wasGeneratedBy`, `prov:wasAssociatedWith`.
+* `xsd:` datatypes for literal typing (`xsd:dateTime`, `xsd:string`, `xsd:double`, `xsd:boolean`, `xsd:integer`).
 
 **Deliberate non-imports / minimal linking:**
-- **SNOMED CT / LOINC / OMOP** were not imported directly due to licensing considerations and scope: MEDS is primarily a data-format standard. Instead, the ontology includes `:externalCodeId` (or encourages `skos:exactMatch`) so that `:Code` instances may link to external controlled vocabularies. This keeps the ontology license-flexible and permits downstream mapping without embedding third-party ontologies.
 
-**Rationale:** reuse essential infrastructural vocabularies for interoperability; avoid heavy clinical ontologies inside the core to maintain broad usability.
+* Clinical ontologies (SNOMED CT, LOINC, OMOP) are **not imported** directly to avoid licensing and scope complexity. The ontology supports linking to external codes (e.g., `skos:exactMatch`, `:externalCodeId`) so that downstream mappings can be created without embedding those ontologies.
+
+**Rationale:** reuse infrastructure vocabularies for interoperability; avoid heavy clinical ontology imports to keep the core light and broadly reusable.
 
 ---
 
@@ -68,14 +73,14 @@ prov: (W3C PROV-O) used to represent dataset-level provenance.
 
 High-level terms distilled from MEDS:
 
-- Subject (primary entity, subject_id)
-- Event (event/observation)
-- Code (vocabulary metadata for codes)
-- DatasetMetadata (dataset-level provenance)
-- SubjectSplit (train/tuning/held_out)
-- LabelSample (prediction sample)
-- Value modalities (image, waveform, etc.)
-- Special codes (MEDS_BIRTH, MEDS_DEATH)
+* Subject (primary entity, `subject_id`)
+* Event (event/observation)
+* Code (vocabulary metadata for codes)
+* DatasetMetadata (dataset-level provenance)
+* SubjectSplit (train / tuning / held_out)
+* LabelSample (prediction sample)
+* Value modalities (image, waveform, etc.)
+* Special codes (MEDS_BIRTH, MEDS_DEATH)
 
 ---
 
@@ -84,200 +89,250 @@ High-level terms distilled from MEDS:
 **Modeling strategy:** *middle-out*, with `Event` as central.
 
 **Top-level classes:**
-- `:Subject` — primary entity; declared with a functional key `:subjectId`.
-- `:Event` — core per-row observation. Declared disjoint with `:LabelSample`.
-- `:Code` — vocabulary entry; required to have `:codeString`.
-- `:DatasetMetadata` — dataset provenance & conversion metadata; declared as a subclass of `prov:Entity` so that all provenance relations (e.g., prov:wasDerivedFrom) use the standard PROV-O pattern.
-- `:SubjectSplit` — enumeration-style class for dataset partitions.
-- `:LabelSample` — supervised learning sample (subject × prediction_time × label).
-- `:ValueModality` (abstract) with concrete subclasses (e.g., `:ImageValue`) to model extensions.
 
-**Design note:** `StaticEvent` was considered but not made a strict subclass — staticity (absence of time) is modeled via optionality of the `:time` property rather than dedicated subclassing, to preserve data flexibility.
+* `meds:Subject` — primary entity; declared with a functional key `meds:subjectId`.
+* `meds:Event` — core per-row observation. Declared disjoint with `meds:LabelSample`.
+* `meds:Code` — vocabulary entry; required to have `meds:codeString`.
+* `meds:DatasetMetadata` — dataset provenance & conversion metadata; **subclass of both `prov:Entity` and `dcat:Dataset`** so that provenance and catalog semantics apply.
+* `meds:SubjectSplit` — enumeration-style class for dataset partitions (train/tuning/held_out).
+* `meds:LabelSample` — supervised learning sample (subject × prediction_time × label).
+* `meds:ValueModality` (abstract) with concrete subclasses (e.g., `meds:ImageValue`) to model extensions.
+
+**Design note:** static events (no time) are modeled by optional `time` property rather than a bespoke `StaticEvent` subclass to remain flexible.
 
 ---
 
 ## 5. Class properties (slots)
 
 **Object properties (selected):**
-- `:hasSubject` (Event|LabelSample → Subject) — primary join.
-- `:hasCode` (Event → Code) — link to code metadata.
-- `:hasValueModality` (Event → ValueModality) — extensible modalities.
-- `:assignedSplit` (Subject → SubjectSplit) — split assignment.
-- `prov:wasDerivedFrom` (Event|Code|Subject|LabelSample → DatasetMetadata) — provenance.
+
+* `meds:hasSubject` (Event|LabelSample → Subject) — primary join.
+* `meds:hasCode` (Event → Code) — link to code metadata.
+* `meds:hasValueModality` (Event → ValueModality) — extensible modalities.
+* `meds:assignedSplit` (Subject → SubjectSplit) — split assignment.
+* `prov:wasDerivedFrom` (Event|Code|Subject|LabelSample → DatasetMetadata) — provenance.
 
 **Datatype properties (selected):**
-- `:subjectId` (Subject → xsd:string) — functional key.
-- `:time` (Event → xsd:dateTime) — optional (0..1).
-- `:codeString` (Event|Code → xsd:string) — canonical code literal.
-- `:numericValue` (Event → xsd:double) — optional numeric.
-- `:textValue` (Event → xsd:string) — optional textual.
-- `:predictionTime` (LabelSample → xsd:dateTime) — required.
-- `:booleanValue`, `:integerValue`, `:floatValue`, `:categoricalValue` (LabelSample) — mutually exclusive by design (SHACL enforces exactly-one-of).
-- Dataset metadata properties: `:datasetName`, `:medsVersion`, `:createdAt`, `:tableName`, etc.
 
-**Domain/range design principle:** define domains and ranges to support automatic validation and documentation, but avoid over-constraining the open nature of MEDS data.
+* `meds:subjectId` (Subject → xsd:string) — functional key.
+* `meds:time` (Event → xsd:dateTime) — optional (0..1).
+* `meds:codeString` (Event|Code → xsd:string) — canonical code literal.
+* `meds:numericValue` (Event → xsd:double) — optional numeric.
+* `meds:textValue` (Event → xsd:string) — optional textual.
+* `meds:predictionTime` (LabelSample → xsd:dateTime) — required.
+* `meds:booleanValue`, `meds:integerValue`, `meds:floatValue`, `meds:categoricalValue` (LabelSample) — mutually exclusive by design (SHACL enforces exactly-one-of).
+* Dataset metadata: use **standard** properties where possible: `dct:title` (dataset_name), `dct:hasVersion` (dataset_version), `dct:created` (created_at), `dct:license` (license), `dcat:distribution` (location/description). MEDS-specific repeated-literal properties remain in `meds:` for column lists (e.g., `meds:rawSourceIdColumn`).
+
+**Domain/range design principle:** define domains and ranges to support automatic validation and documentation, but avoid over-constraining open MEDS data.
 
 ---
 
 ## 6. Facets of the properties (constraints)
 
 **OWL-level constraints (expressed as restrictions):**
-- `Event` has exactly one `:hasSubject` and exactly one `:hasCode` (the ontology encodes a cardinality of 1 but SHACL relaxes this to allow `codeString` alternative).
-- `Code` must have exactly one `:codeString` (OWL `hasKey` is used).
-- `LabelSample` must have exactly one `:hasSubject` and one `:predictionTime`; each label value property has `maxCardinality 1`.
-- `prov:wasDerivedFrom` values for `Events`, `Codes`, `Subjects`, and `LabelSamples` must be of type `DatasetMetadata` (a `prov:Entity`).
+
+* `meds:Event` has exactly one `meds:hasSubject` and OWL-level cardinality constraints guide modeling.
+* `meds:Code` has a key on `meds:codeString`.
+* `meds:LabelSample` must have one `meds:predictionTime` and at most one of each label datatype property.
+* `prov:wasDerivedFrom` values for Events/Codes/Subjects/LabelSamples are declared to be `meds:DatasetMetadata`.
 
 **SHACL-level constraints (enforcement & pragmatic choices):**
-- SHACL shapes enforce:
-  - `Event` requires either `:hasCode` (link to `:Code`) **or** `:codeString` literal (reflects MEDS flexibility).
-  - `LabelSample` must contain **exactly one** of `{booleanValue, integerValue, floatValue, categoricalValue}` via `sh:or`.
-  - `DatasetMetadata` requires `:datasetName`, `:medsVersion`, and `:createdAt` (this is a stricter profile than the permissive MEDS JSON schema and can be relaxed).
-  - `SubjectSplit.splitName` limited to enumerated values `train`, `tuning`, `held_out`.
 
-**Why OWL + SHACL?**  
-OWL expresses conceptual constraints and enables reasoning; SHACL provides practical, tractable validation for dataset-level conformance checks, including cardinalities and mutually-exclusive datatypes that are awkward in OWL. The design intentionally uses OWL for modeling and SHACL for operational validation.
+* SHACL shapes enforce practical validation:
+
+  * `Event` requires either `meds:hasCode` (link to `meds:Code`) **or** `meds:codeString` literal (reflects MEDS flexibility).
+  * `LabelSample` must contain **exactly one** of `{booleanValue, integerValue, floatValue, categoricalValue}` using `sh:or`.
+  * `DatasetMetadata` requires `dct:title`, `meds:medsVersion`, and `dct:created` in the chosen profile.
+  * `SubjectSplit.splitName` restricted to `train`, `tuning`, `held_out`.
+
+**Why OWL + SHACL?**
+OWL expresses conceptual constraints and supports reasoning; SHACL provides tractable, dataset-level validation (datatype correctness, cardinality, mutually exclusive label values) that is practical for ETL and CI pipelines.
 
 ---
 
 ## 7. Class instances (example uses)
 
-See `examples/examples.ttl`. Instances demonstrate:
-- `:Dataset_MIMIC_DEMO :datasetName "MIMIC-IV-Demo" ; :medsVersion "0.3.3" ; ...`
-- `:subj12345678 a :Subject ; :subjectId "12345678" ; :assignedSplit :trainSplit .`
-- `:meas1 a :Event ; :hasSubject :subj12345678 ; :hasCode :LAB_51237_UNK ; :time "2178-02-12T11:38:00"^^xsd:dateTime ; :numericValue 1.4; prov:wasDerivedFrom :Dataset_MIMIC_DEMO .`
-- `:label_12345678_20210401 a :LabelSample ; :hasSubject :subj12345678 ; :predictionTime "2021-04-01T09:30:00"^^xsd:dateTime ; :booleanValue true .`
+Instances demonstrate recommended patterns:
+
+* Dataset instance (note `dct:title`, `dct:hasVersion`, `dcat:distribution`, and ETL via `prov:Activity`):
+
+  ```turtle
+  :Dataset_MIMIC_DEMO a meds:DatasetMetadata ;
+      dct:title "MIMIC-IV-Demo" ;
+      dct:hasVersion "2.2" ;
+      meds:medsVersion "0.3.3" ;
+      dct:created "2025-03-28T13:47:38.809053"^^xsd:dateTime ;
+      dcat:distribution :dist_dataset1 ;
+      prov:wasGeneratedBy :etlActivity1 ;
+      meds:tableName "data/train/0.parquet", "data/train/1.parquet" .
+  ```
+
+* ETL activity:
+
+  ```turtle
+  :etlActivity1 a prov:Activity ;
+      rdfs:label "meds-etl" ;
+      dct:hasVersion "0.0.4" ;
+      rdfs:comment "ETL notes: normalization, mapping and table joins." .
+  ```
+
+* Event with code object or inline codeString fallback:
+
+  ```turtle
+  :meas1 a meds:Event ;
+      meds:hasSubject :subj12345678 ;
+      meds:hasCode :LAB_51237_UNK ;
+      meds:time "2178-02-12T11:38:00"^^xsd:dateTime ;
+      meds:numericValue 1.4 ;
+      prov:wasDerivedFrom :Dataset_MIMIC_DEMO .
+  ```
+
+* Label sample:
+
+  ```turtle
+  :label_12345678_20210401 a meds:LabelSample ;
+      meds:hasSubject :subj12345678 ;
+      meds:predictionTime "2021-04-01T09:30:00"^^xsd:dateTime ;
+      meds:booleanValue true ;
+      prov:wasDerivedFrom :Dataset_MIMIC_DEMO .
+  ```
 
 ---
 
 ## 8. Direct mapping table: MEDS data model → ontology
 
-The following table explicitly maps MEDS components (as specified in MEDS documentation) to the ontology elements in `ontology/meds.ttl`. Use this mapping as the authoritative bridge when ingesting MEDS data into RDF.
+The following table maps MEDS components to the ontology elements in `ontology/meds.ttl`. Use this as the authoritative bridge when ingesting MEDS data into RDF.
 
-> **Legend:**  
-> — MEDS = original MEDS concept / schema element (columns, files).  
-> — Ontology = class / property or instance in `ontology/meds.ttl`.  
+> **Legend:**
+> — MEDS = original MEDS concept / schema element (columns, files).
+> — Ontology = class / property or instance in `ontology/meds.ttl`.
 > — Enforcement = where the constraint is enforced (OWL, SHACL, or Procedural/ETL).
 
-### 8.1 Core DataSchema → `:Event` and related
+### 8.1 Core DataSchema → `meds:Event` and related
 
-| MEDS element | Ontology mapping | Datatype / range | Required? (MEDS) | Enforcement |
-|---|---:|---|---:|---|
-| `subject_id` (DataSchema column) | `:Event :hasSubject → :Subject` ; `:Subject :subjectId` holds the literal | `xsd:string` for `:subjectId` | Yes | SHACL: `EventShape` requires `:hasSubject`; SHACL: `SubjectShape` requires `:subjectId`; OWL: `:subjectId` is functional |
-| `time` (DataSchema column) | `:Event :time` | `xsd:dateTime` | Yes (nullable only for static events) | SHACL: `time` `maxCount 1` and `datatype xsd:dateTime` |
-| `code` (DataSchema column) | `:Event :hasCode → :Code` or fallback `:Event :codeString` (literal) | `xsd:string` | Yes | SHACL: `EventShape` `sh:or` requires `hasCode` or `codeString`; OWL: `Code` `hasKey :codeString` |
-| `numeric_value` | `:Event :numericValue` | `xsd:double` | Optional | SHACL: `numericValue` `maxCount 1` and `datatype xsd:double` |
-| `text_value` | `:Event :textValue` | `xsd:string` | Optional | SHACL: `textValue` `maxCount 1` |
+| MEDS element          |                                                                             Ontology mapping | Datatype / range                  |                 Required? (MEDS) | Enforcement                                                                                                                   |
+| --------------------- | -------------------------------------------------------------------------------------------: | --------------------------------- | -------------------------------: | ----------------------------------------------------------------------------------------------------------------------------- |
+| `subject_id` (column) | `meds:Event meds:hasSubject → meds:Subject`; `meds:Subject meds:subjectId` holds the literal | `xsd:string` for `meds:subjectId` |                              Yes | SHACL: EventShape requires `meds:hasSubject`; SHACL: SubjectShape requires `meds:subjectId`; OWL: `meds:subjectId` functional |
+| `time` (column)       |                                                                       `meds:Event meds:time` | `xsd:dateTime`                    | Yes (nullable for static events) | SHACL: `time` `maxCount 1` + datatype                                                                                         |
+| `code` (column)       |              `meds:Event meds:hasCode → meds:Code` **or** fallback `meds:codeString` literal | `xsd:string`                      |                              Yes | SHACL: `EventShape` `sh:or` enforces either `hasCode` or `codeString`; OWL: `Code` hasKey `meds:codeString`                   |
+| `numeric_value`       |                                                                          `meds:numericValue` | `xsd:double`                      |                         Optional | SHACL: `numericValue` `maxCount 1`                                                                                            |
+| `text_value`          |                                                                             `meds:textValue` | `xsd:string`                      |                         Optional | SHACL: `textValue` `maxCount 1`                                                                                               |
 
-### 8.2 CodeMetadataSchema → `:Code`
+### 8.2 CodeMetadataSchema → `meds:Code`
 
-| MEDS element | Ontology mapping | Datatype / range | Required? | Enforcement |
-|---|---:|---|---:|---|
-| codes.parquet rows (`code`) | `:Code` instances; `:codeString` holds value | `xsd:string` | `Code` table expected to contain all unique codes (MEDS guidance) | OWL: `:Code` `hasKey :codeString`; SHACL: `CodeShape` `minCount 1` |
-| `description` | `:Code :codeDescription` | `xsd:string` | Optional | SHACL: `CodeShape` allows optional `codeDescription` |
-| `parent_codes` | `:Code :parentCode → :Code` | IRI linking to other `:Code` | Optional | SHACL: `parentCode` nodeClass `:Code` |
+| MEDS element   |                                              Ontology mapping | Datatype / range |                Required? | Enforcement                                                              |
+| -------------- | ------------------------------------------------------------: | ---------------- | -----------------------: | ------------------------------------------------------------------------ |
+| code rows      | `meds:Code` instances; `meds:codeString` holds canonical text | `xsd:string`     | Expected (MEDS guidance) | OWL: `meds:Code` `hasKey meds:codeString`; SHACL: CodeShape `minCount 1` |
+| `description`  |                              `meds:Code meds:codeDescription` | `xsd:string`     |                 Optional | SHACL optional                                                           |
+| `parent_codes` |                       `meds:Code meds:parentCode → meds:Code` | IRI              |                 Optional | SHACL can check node class if desired                                    |
 
-### 8.3 DatasetMetadataSchema → `:DatasetMetadata`
+### 8.3 DatasetMetadataSchema → `meds:DatasetMetadata`
 
-| MEDS element                       |                                               Ontology mapping | Datatype / range | Required? (ontology profile) | Enforcement                                                                                                |
-| ---------------------------------- | -------------------------------------------------------------: | ---------------- | ---------------------------: | ---------------------------------------------------------------------------------------------------------- |
-| `dataset_name`                     |                                `:DatasetMetadata :datasetName` | `xsd:string`     |           Required (profile) | SHACL: `DatasetMetadataShape` requires `datasetName`; OWL: `DatasetMetadata rdfs:subClassOf` cardinality 1 |
-| `meds_version`                     |                                `:DatasetMetadata :medsVersion` | `xsd:string`     |           Required (profile) | SHACL: `minCount 1`                                                                                        |
-| `created_at`                       |                                  `:DatasetMetadata :createdAt` | `xsd:dateTime`   |           Required (profile) | SHACL: `minCount 1`                                                                                        |
-| `table_name`                       |                     `:DatasetMetadata :tableName` (repeatable) | `xsd:string`     |        Optional / repeatable | SHACL: `minCount 0`                                                                                        |
-| `site_id_column`                   |                  `:DatasetMetadata :siteIdColumn` (repeatable) | `xsd:string`     |                     Optional | Procedural: ETL and dataset documentation recommended                                                      |
-| `subject_id_column`                |               `:DatasetMetadata :subjectIdColumn` (repeatable) | `xsd:string`     |                     Required | Procedural: ETL must provide at least one subjectIdColumn                                                  |
-| `etl_name`                         |                                    `:DatasetMetadata :etlName` | `xsd:string`     |                     Optional | Procedural: ETL documentation recommended                                                                  |
-| `license`                          |                                    `:DatasetMetadata :license` | `xsd:string`     |                     Optional | Procedural: license documentation recommended                                                              |
-| `location_uri`                     |                                `:DatasetMetadata :locationUri` | `xsd:string`     |                     Optional | Procedural: dataset location documentation recommended                                                     |
-| `description_uri`                  |                             `:DatasetMetadata :descriptionUri` | `xsd:string`     |                     Optional | Procedural: dataset description documentation recommended                                                  |
-| `raw_source_id_column`             |             `:DatasetMetadata :rawSourceIdColumn` (repeatable) | `xsd:string`     |                     Optional | Procedural: ETL and dataset documentation recommended                                                      |
-| `code_modifier_column`             |            `:DatasetMetadata :codeModifierColumn` (repeatable) | `xsd:string`     |                     Optional | Procedural: ETL and dataset documentation recommended                                                      |
-| `additional_value_modality_column` | `:DatasetMetadata :additionalValueModalityColumn` (repeatable) | `xsd:string`     |                     Optional | Procedural: ETL and dataset documentation recommended                                                      |
-| `other_extension_column`           |          `:DatasetMetadata :otherExtensionColumn` (repeatable) | `xsd:string`     |                     Optional | Procedural: ETL and dataset documentation recommended                                                      |
+| MEDS element                                             |                                                                                                   Ontology mapping | Datatype / range                                 |                             Required? (ontology profile) | Enforcement                                                                                                                                                                   |
+| -------------------------------------------------------- | -----------------------------------------------------------------------------------------------------------------: | ------------------------------------------------ | -------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dataset_name`                                           |                                                                                                        `dct:title` | `xsd:string`                                     |                                   **Required** (profile) | SHACL: `DatasetMetadataShape` requires `dct:title`; OWL: cardinality restriction                                                                                              |
+| `dataset_version`                                        |                                                                                                   `dct:hasVersion` | `xsd:string`                                     |                                                 Optional | SHACL: `maxCount 1`                                                                                                                                                           |
+| `meds_version`                                           |                                                                                                 `meds:medsVersion` | `xsd:string`                                     |                                             **Required** | SHACL: `minCount 1`                                                                                                                                                           |
+| `created_at`                                             |                                                                                                      `dct:created` | `xsd:dateTime`                                   |                                             **Required** | SHACL: `minCount 1`                                                                                                                                                           |
+| `license`                                                |                                                                                                      `dct:license` | IRI or literal (prefer IRI)                      |                                                 Optional | SHACL: maxCount 1 (IRI preferred)                                                                                                                                             |
+| `location_uri` / `description_uri`                       |                             `dcat:distribution` → `dcat:Distribution` with `dcat:downloadURL` and `dcat:accessURL` | IRI                                              | Optional (but dataset profile requires >=1 distribution) | SHACL: check `dcat:distribution` node and its properties                                                                                                                      |
+| `table_name`                                             |                                                                                      `meds:tableName` (repeatable) | `xsd:string`                                     |                                    Optional (repeatable) | SHACL: repeatable literal                                                                                                                                                     |
+| `raw_source_id_columns`                                  |                                                                              `meds:rawSourceIdColumn` (repeatable) | `xsd:string`                                     |                                                 Optional | Repeated-literal property (one triple per column)                                                                                                                             |
+| `code_modifier_columns`                                  |                                                                             `meds:codeModifierColumn` (repeatable) | `xsd:string`                                     |                                                 Optional | Repeated-literal                                                                                                                                                              |
+| `additional_value_modality_columns`                      |                                                                  `meds:additionalValueModalityColumn` (repeatable) | `xsd:string`                                     |                                                 Optional | Repeated-literal                                                                                                                                                              |
+| `site_id_columns`                                        |                                                                                   `meds:siteIdColumn` (repeatable) | `xsd:string`                                     |                                                 Optional | Repeated-literal                                                                                                                                                              |
+| `other_extension_columns`                                |                                                                           `meds:otherExtensionColumn` (repeatable) | `xsd:string`                                     |                                                 Optional | Repeated-literal                                                                                                                                                              |
+| `etl_name`, `etl_version`, `etl_notes`, `protocol_notes` | Represented on a `prov:Activity` linked via `prov:wasGeneratedBy` (`rdfs:label`, `dct:hasVersion`, `rdfs:comment`) | `xsd:string` and `xsd:dateTime` where applicable |                                                 Optional | Procedural: ETL authors should construct the `prov:Activity` instance; SHACL validates presence of `prov:wasGeneratedBy` pointing to a `prov:Activity` if required by profile |
 
-### 8.4 SubjectSplitSchema → `:SubjectSplit`
+> **Note:** ETL metadata is purposely **not** modeled as custom datatype properties on `meds:DatasetMetadata`. This keeps dataset metadata cleaner and uses PROV-O for provenance semantics.
 
-| MEDS element | Ontology mapping | Datatype / range | Required? | Enforcement |
-|---|---:|---|---:|---|
-| `subject_id`, `split` | `:Subject :assignedSplit → :SubjectSplit` ; `:SubjectSplit :splitName` | `xsd:string` | Split assignment optional per subject | SHACL: `SubjectSplitShape` restricts `:splitName` values to `train`, `tuning`, `held_out` |
+### 8.4 SubjectSplitSchema → `meds:SubjectSplit`
 
-### 8.5 LabelSchema → `:LabelSample`
+| MEDS element          |                                                                           Ontology mapping | Datatype / range |            Required? | Enforcement                                                                       |
+| --------------------- | -----------------------------------------------------------------------------------------: | ---------------- | -------------------: | --------------------------------------------------------------------------------- |
+| `subject_id`, `split` | `meds:Subject meds:assignedSplit → meds:SubjectSplit` ; `meds:SubjectSplit meds:splitName` | `xsd:string`     | Optional per subject | SHACL: `SubjectSplitShape` restricts `splitName` to `train`, `tuning`, `held_out` |
 
-| MEDS element | Ontology mapping | Datatype / range | Required? | Enforcement |
-|---|---:|---|---:|---|
-| `subject_id` | `:LabelSample :hasSubject → :Subject` | IRI referencing `:Subject` | Required | SHACL: `LabelSampleShape` requires `hasSubject` |
-| `prediction_time` | `:LabelSample :predictionTime` | `xsd:dateTime` | Required | SHACL: `minCount 1` |
-| label value columns (boolean/integer/float/categorical) | `:LabelSample` datatype properties (`:booleanValue`, `:integerValue`, `:floatValue`, `:categoricalValue`) | variety of xsd types | Exactly one of these is expected per sample | SHACL: `LabelSampleShape` enforces exactly-one-of via `sh:or` |
+### 8.5 LabelSchema → `meds:LabelSample`
+
+| MEDS element                                            |                                                                                                              Ontology mapping | Datatype / range               |                        Required? | Enforcement                                     |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------: | ------------------------------ | -------------------------------: | ----------------------------------------------- |
+| `subject_id`                                            |                                                                             `meds:LabelSample meds:hasSubject → meds:Subject` | IRI referencing `meds:Subject` |                         Required | SHACL: `LabelSampleShape` requires `hasSubject` |
+| `prediction_time`                                       |                                                                                        `meds:LabelSample meds:predictionTime` | `xsd:dateTime`                 |                         Required | SHACL: `minCount 1`                             |
+| label value columns (boolean/integer/float/categorical) | `meds:LabelSample` datatype properties (`meds:booleanValue`, `meds:integerValue`, `meds:floatValue`, `meds:categoricalValue`) | variety of xsd types           | Exactly one per sample (profile) | SHACL `sh:or` enforces exactly-one-of           |
 
 ---
 
 ## 9. Design alternatives considered and rationale
 
-1. **Representation of label values**  
-   - *Option A (chosen):* Four datatype properties on `LabelSample` with SHACL enforcing exactly-one-of.  
-     *Rationale:* Simpler RDF serialization; aligns directly with MEDS `LabelSchema` columns. SHACL can validate mutual exclusivity.  
-   - *Option B (alternative):* Introduce `LabelValue` individuals (object property `:hasLabelValue`) with disjoint typed subclasses (`BooleanLabelValue`, `FloatLabelValue`, etc.) and a single `:hasLabelValue` cardinality of 1.  
-     *Rationale for alternative:* Better OWL reasoning support for “one-of” constraints and richer provenance/annotation on label values. More verbose in RDF. Use Option B if stronger reasoning is required.
+1. **Representation of label values**
 
-2. **`code` as literal vs resource**  
-   - *Option A (chosen):* Support both: `:Event :hasCode → :Code` *or* inline `:Event :codeString "..."` literal.  
-     *Rationale:* MEDS allows datasets without a `codes.parquet`; this hybrid supports both workflows while enabling richer semantics when `:Code` resources exist.
-   - *Option B (alternative):* Force `hasCode` to always reference a `:Code`.  
-     *Rationale:* Simpler reasoning and consistent URI referencing but would penalize datasets lacking a separate code table.
+   * **Option A (chosen):** Four datatype properties on `LabelSample` with SHACL enforcing exactly-one-of.
+     *Rationale:* Simpler RDF serialization; aligns directly with MEDS `LabelSchema`. SHACL enforces mutual exclusivity.
+   * **Option B (alternative):** Use `LabelValue` individuals (object property `:hasLabelValue`) with typed subclasses and a single cardinality of 1. Better for OWL reasoning but more verbose.
 
-3. **Dataset metadata strictness**  
-   - *Option A (chosen in current artifacts):* Enforce `datasetName`, `medsVersion`, `createdAt` as required in SHACL.  
-     *Rationale:* Practical for datasets intended for publication; ensures essential provenance.  
-   - *Option B (looser alternative):* Keep all metadata optional and recommend best-practice documentation.  
-     *Rationale:* More faithfully mirrors MEDS JSON schema where fields are optional.
+2. **`code` as literal vs resource**
 
-4. **Where to enforce operational invariants**  
-   - The ontology records **subject contiguity** and **temporal ordering** as annotations (procedural constraints). Enforcement is delegated to ETL and validator scripts. SHACL/OWL cannot reliably enforce file-shard level contiguity or sequence ordering across many triples.
+   * **Option A (chosen):** Support both: `Event meds:hasCode → meds:Code` *or* inline `meds:codeString`.
+     *Rationale:* Accommodates datasets without separate `codes.parquet` and enables richer semantics when `meds:Code` exists.
+   * **Option B:** Force `hasCode` to always reference `Code` (simpler reasoning, penalizes datasets without `Code` table).
+
+3. **Dataset metadata strictness**
+
+   * **Option A (current):** Enforce `dct:title`, `meds:medsVersion`, `dct:created` in the SHACL profile.
+   * **Option B:** Keep all metadata optional to mirror permissive JSON schema.
+
+4. **ETL metadata modeling**
+
+   * **Option A (chosen):** Model ETL as a `prov:Activity` and avoid custom datatype properties on `DatasetMetadata`.
+     *Rationale:* Standard provenance semantics, easier to attach version/notes and chain activities.
+   * **Option B:** Keep `etlName`, `etlVersion` as properties on `DatasetMetadata` (less expressive, avoided).
+
+5. **Column lists representation**
+
+   * **Option A (chosen):** Repeated-literal `meds:` datatype properties (one triple per column).
+   * **Option B:** Model `Column` individuals for richer metadata (only if per-column metadata needed).
 
 ---
 
 ## 10. Enforcement strategy and limitations
 
-**OWL role:** conceptual modeling, unique keys, class hierarchy, disjointness, and machine-interpretable semantics. Useful for knowledge integration and inferencing (e.g., linking `Code` parent hierarchies).
+**OWL role:** conceptual modeling, keys, class hierarchy, and disjointness. Useful for integration and limited inferencing.
 
-**SHACL role:** practical validation of dataset instances (datatype correctness, cardinality, mutually-exclusive label presence, presence of required dataset metadata). The repository supplies `shacl/meds-shapes.ttl` for this purpose.
+**SHACL role:** practical validation of dataset instances (datatype correctness, cardinality, mutually exclusive label presence, presence of required dataset metadata). The repository supplies `shacl/meds-shapes.ttl` for this.
 
 **Procedural role:** ETL and dataset-level checks for:
-- Subject contiguity across physical shards.
-- Temporal ordering within a subject.
-- Global uniqueness of `subjectId` across very large datasets (can be implemented via SPARQL-based SHACL shapes, but may be more efficiently executed in data-processing systems).
+
+* Subject contiguity across physical shards (file-level constraint).
+* Temporal ordering within a subject.
+* Global uniqueness of `subjectId` for very large datasets (can be enforced via SPARQL shapes or external tooling).
 
 **Limitations:**
-- OWL cannot represent file-level or ordering constraints.
-- SHACL can express many structural constraints but will be limited in scale for very large graphs; for very large datasets use streaming or database-backed validation.
-- Exact-one-of for datatypes is implemented via SHACL `sh:or` rather than an OWL axiom — this is a deliberate trade-off for tractable validation.
+
+* OWL cannot express file-level or record-ordering constraints.
+* SHACL is expressive but may be heavy for extremely large graphs — prefer streaming validation or database-backed checks for scale.
+* Some invariants (e.g., subject contiguity, file ordering) must be enforced by ETL processes or auxiliary scripts.
 
 ---
 
 ## 11. Recommended extensions and next steps
 
-1. **LabelValue object-pattern**: if you need stronger OWL reasoning, migrate to the `LabelValue` pattern (object property) and update SHACL accordingly. I can supply a migration patch.
-
-2. **SKOS vocabulary for `SubjectSplit`**: represent splits as `skos:ConceptScheme` for cleaner vocabulary management.
-
-3. **SPARQL-based SHACL constraints**: add SPARQL-based shapes to check uniqueness constraints (e.g., ensure `subjectId` is unique across `:Subject` individuals).
-
-4. **Provenance / audit trail**: Extend PROV-O integration by introducing `prov:Activity` for ETL processes and linking via `prov:wasGeneratedBy`, enabling richer lineage (source raw dataset → ETL activity → MEDS dataset → derived items).
-
-5. **Integration examples**: provide mapping examples to OMOP/LOINC/SNOMED via `skos:exactMatch` or `rdfs:seeAlso` for canonical `:Code` instances.
-
-6. **Validator toolchain**: produce a small Python CLI that runs SHACL, SPARQL uniqueness checks, and file-level contiguity/ordering checks on parquet files (I can provide a starter script).
+1. **LabelValue object-pattern**: migrate to object-pattern if stronger OWL reasoning about label values is required. I can supply a migration patch.
+2. **SKOS for SubjectSplit**: model splits as a `skos:ConceptScheme` for cleaner vocab management.
+3. **SPARQL-based SHACL constraints**: implement uniqueness checks (e.g., unique `subjectId`) as SPARQL SHACL shapes for rigorous validation.
+4. **Provenance / audit trail**: extend PROV-O usage (multiple ETL activities, source raw dataset links).
+5. **Integration examples**: provide mappings from `meds:Code` to external vocabularies via `skos:exactMatch` / `rdfs:seeAlso`.
+6. **Validator toolchain**: provide a small CLI (Python) that runs SHACL, SPARQL uniqueness checks, and file-level contiguity/ordering checks on parquet files — a starter script is available on request.
 
 ---
 
 ## Appendix A — Quick reference: files in this repository
 
-- `ontology/meds.ttl` — OWL ontology (Turtle)
-- `shacl/meds-shapes.ttl` — SHACL shapes for validation
-- `examples/examples.ttl` — example dataset instances
-- `docs/` — (optional) generated Widoco docs for GitHub Pages
-- `.github/workflows/validate.yml` — CI validation workflow
-- `MODELING.md` — this document (detailed modeling rationale)
+* `ontology/meds.ttl` — OWL ontology (Turtle)
+* `shacl/meds-shapes.ttl` — SHACL shapes for validation (reflects the `dct:` and `prov:` changes)
+* `examples/examples.ttl` — example dataset instances (refactored to use `dct:title`, `prov:Activity`, `dcat:Distribution`)
+* `docs/` — (optional) generated Widoco docs for GitHub Pages
+* `.github/workflows/validate.yml` — CI validation workflow
+* `MODELING.md` — this document (detailed modeling rationale)
 
 ---
 
@@ -287,10 +342,10 @@ Please cite the MEDS project and the original MEDS documentation when publishing
 
 > Medical Event Data Standard (MEDS). GitHub: `https://github.com/Medical-Event-Data-Standard/med`. MEDS website: `https://medical-event-data-standard.github.io/`.
 
-If you use this ontology in academic publications, include the ontology version and the repository URL (for reproducibility).
+Include the ontology version and repository URL in academic publications for reproducibility.
 
 ---
 
 ## Acknowledgements
 
-This modeling exercise follows the methodological guidance of **Deborah L. McGuinness & Natalya F. Noy — "Ontology Development 101"**. Design and implementation choices reflect the MEDS project’s stated philosophy and the practicalities of dataset validation in a production environment.
+This modeling exercise follows **Deborah L. McGuinness & Natalya F. Noy — "Ontology Development 101"**. Design and implementation choices reflect the MEDS project’s philosophy and the practicalities of dataset validation in production environments.
