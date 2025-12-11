@@ -41,6 +41,13 @@
     
 
 
+    <!-- http://www.w3.org/2002/07/owl#maxCardinality -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#maxCardinality"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -69,6 +76,20 @@
      -->
 
 
+    
+
+
+    <!-- http://purl.org/dc/terms#hasVersion -->
+
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms#hasVersion"/>
+    
+
+
+    <!-- http://purl.org/dc/terms#license -->
+
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms#license"/>
     
 
 
@@ -170,20 +191,6 @@
 
 
     <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms#created"/>
-    
-
-
-    <!-- http://purl.org/dc/terms#hasVersion -->
-
-
-    <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms#hasVersion"/>
-    
-
-
-    <!-- http://purl.org/dc/terms#license -->
-
-
-    <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms#license"/>
     
 
 
@@ -429,6 +436,13 @@
     
 
 
+    <!-- http://purl.org/dc/terms#LicenseDocument -->
+
+
+    <owl:Class rdf:about="http://purl.org/dc/terms#LicenseDocument"/>
+    
+
+
     <!-- http://www.w3.org/ns/dcat#Dataset -->
 
 
@@ -490,6 +504,12 @@
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://purl.org/dc/terms#license"/>
+                <owl:allValuesFrom rdf:resource="http://purl.org/dc/terms#LicenseDocument"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.w3.org/ns/dcat#distribution"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
             </owl:Restriction>
@@ -498,6 +518,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://purl.org/dc/terms#hasVersion"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -516,18 +542,6 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://albertomarfoglia.github.io/meds-ontology#medsVersion"/>
                 <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.org/dc/terms#hasVersion"/>
-                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.org/dc/terms#license"/>
-                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>High-level provenance and conversion metadata for a MEDS dataset. 
@@ -742,6 +756,9 @@
         <rdf:type rdf:resource="https://albertomarfoglia.github.io/meds-ontology#SubjectSplit"/>
         <rdfs:label xml:lang="en">tuning</rdfs:label>
     </owl:NamedIndividual>
+    <rdf:Description>
+        <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</owl:maxCardinality>
+    </rdf:Description>
 </rdf:RDF>
 
 

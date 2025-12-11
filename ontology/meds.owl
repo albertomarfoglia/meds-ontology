@@ -19,8 +19,7 @@
 
 dct:title a owl:DatatypeProperty .
 dct:created a owl:DatatypeProperty .
-dct:license a owl:DatatypeProperty .
-dct:hasVersion a owl:DatatypeProperty .
+dct:hasVersion a owl:ObjectProperty .
 
 #################################################################
 #    Classes
@@ -126,6 +125,7 @@ meds:DatasetMetadata
     ] , [
         a owl:Restriction ;
         owl:onProperty dct:license ;
+        owl:allValuesFrom dct:LicenseDocument ;
         owl:maxCardinality 1
     ] , [
         a owl:Restriction ;

@@ -48,7 +48,6 @@ meds:DatasetMetadataShape
     sh:property [
         sh:path dct:hasVersion ;
         sh:maxCount 1 ;
-        sh:datatype xsd:string ;
         sh:message "DatasetMetadata may have dct:hasVersion (dataset version)." ;
     ] ;
     sh:property [

@@ -17,6 +17,9 @@
 # http://purl.org/dc/terms#description
 <http://purl.org/dc/terms#description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
 # 
+# http://www.w3.org/2002/07/owl#maxCardinality
+<http://www.w3.org/2002/07/owl#maxCardinality> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
 # 
 # 
 # #################################################################
@@ -37,6 +40,12 @@
 # #
 # #################################################################
 # 
+# 
+# http://purl.org/dc/terms#hasVersion
+<http://purl.org/dc/terms#hasVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+# 
+# http://purl.org/dc/terms#license
+<http://purl.org/dc/terms#license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
 # 
 # http://www.w3.org/ns/dcat#distribution
 <http://www.w3.org/ns/dcat#distribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
@@ -94,12 +103,6 @@
 # 
 # http://purl.org/dc/terms#created
 <http://purl.org/dc/terms#created> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-# 
-# http://purl.org/dc/terms#hasVersion
-<http://purl.org/dc/terms#hasVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-# 
-# http://purl.org/dc/terms#license
-<http://purl.org/dc/terms#license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
 # 
 # http://purl.org/dc/terms#title
 <http://purl.org/dc/terms#title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
@@ -247,6 +250,9 @@ _:genid1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/20
 # #################################################################
 # 
 # 
+# http://purl.org/dc/terms#LicenseDocument
+<http://purl.org/dc/terms#LicenseDocument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
 # http://www.w3.org/ns/dcat#Dataset
 <http://www.w3.org/ns/dcat#Dataset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 # 
@@ -281,32 +287,32 @@ _:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/19
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/dcat#Dataset> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid7 .
-_:genid7 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://www.w3.org/ns/dcat#Distribution> .
-_:genid7 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/dcat#distribution> .
+_:genid7 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://purl.org/dc/terms#LicenseDocument> .
+_:genid7 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#license> .
 _:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid8 .
-_:genid8 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://www.w3.org/ns/prov#Activity> .
-_:genid8 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid8 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://www.w3.org/ns/dcat#Distribution> .
+_:genid8 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/dcat#distribution> .
 _:genid8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid9 .
-_:genid9 <http://www.w3.org/2002/07/owl#cardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
-_:genid9 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#created> .
+_:genid9 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://www.w3.org/ns/prov#Activity> .
+_:genid9 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
 _:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid10 .
-_:genid10 <http://www.w3.org/2002/07/owl#cardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
-_:genid10 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#title> .
+_:genid10 <http://www.w3.org/2002/07/owl#maxCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+_:genid10 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#hasVersion> .
 _:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid11 .
 _:genid11 <http://www.w3.org/2002/07/owl#cardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
-_:genid11 <http://www.w3.org/2002/07/owl#onProperty> <https://albertomarfoglia.github.io/meds-ontology#medsVersion> .
+_:genid11 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#created> .
 _:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid12 .
-_:genid12 <http://www.w3.org/2002/07/owl#maxCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
-_:genid12 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#hasVersion> .
+_:genid12 <http://www.w3.org/2002/07/owl#cardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+_:genid12 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#title> .
 _:genid12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid13 .
-_:genid13 <http://www.w3.org/2002/07/owl#maxCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
-_:genid13 <http://www.w3.org/2002/07/owl#onProperty> <http://purl.org/dc/terms#license> .
+_:genid13 <http://www.w3.org/2002/07/owl#cardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+_:genid13 <http://www.w3.org/2002/07/owl#onProperty> <https://albertomarfoglia.github.io/meds-ontology#medsVersion> .
 _:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#comment> "High-level provenance and conversion metadata for a MEDS dataset. \n         dataset_name → dct:title ;\n         dataset_version → dct:hasVersion ;\n         meds_version → meds:medsVersion ;\n         created_at → dct:created ;\n         license → dct:license ;\n         location_uri/description_uri → dcat:distribution (Distribution with dcat:downloadURL / dcat:accessURL) ;\n         ETL metadata (name, version, notes) are captured via prov:wasGeneratedBy → prov:Activity (rdfs:label, dct:hasVersion, rdfs:comment);\n         column lists → meds:... repeated-literal properties." .
 <https://albertomarfoglia.github.io/meds-ontology#DatasetMetadata> <http://www.w3.org/2000/01/rdf-schema#label> "DatasetMetadata" .
@@ -432,4 +438,5 @@ _:genid28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1
 <https://albertomarfoglia.github.io/meds-ontology#tuningSplit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://albertomarfoglia.github.io/meds-ontology#SubjectSplit> .
 <https://albertomarfoglia.github.io/meds-ontology#tuningSplit> <http://www.w3.org/2000/01/rdf-schema#label> "tuning"@en .
 # 
+_:genid29 <http://www.w3.org/2002/07/owl#maxCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
 # Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/

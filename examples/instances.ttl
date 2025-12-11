@@ -15,10 +15,16 @@
     dct:title "MIMIC-IV-Demo" ;
     :medsVersion "0.3.3" ;
     dct:created "2025-03-28T13:47:38.809053"^^xsd:dateTime ;
-    dct:hasVersion "2.2" ;
+    dct:hasVersion :MyDataset_v2.2 ;
     dcat:distribution :dist_dataset1 ;
     prov:wasGeneratedBy :etlActivity1 ;
+    dct:license :LicenseCCBY4 ;
     :tableName "data/train/0.parquet", "data/train/1.parquet" .
+
+:LicenseCCBY4
+    a dct:LicenseDocument ; 
+    rdfs:label "Creative Commons Attribution 4.0 International" ;
+    rdfs:seeAlso <https://creativecommons.org/licenses/by/4.0/> .
 
 # Distribution for dataset location and description
 :dist_dataset1 a dcat:Distribution ;
